@@ -110,3 +110,9 @@ a {
 .mq-editable-field.mq-math-mode {
     width: 100%;
 }
+
+math-field {
+    padding: 8px;
+    border-radius: 0.5rem;
+    border: 1px solid #ddd;
+}
