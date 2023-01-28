@@ -187,7 +187,7 @@ export default function Home() {
                         <Button fontSize="25px" marginTop="40px" textColor={'white'} bgGradient='linear(to-r, #7928CA, #FF0080)' colorScheme='teal' onClick={() => handleClick()}>Calculate!</Button>
                         <ShowAnswer answer={answer} />
                     </Card>
-                    <Card>
+                    <Card gap={8}>
                         <Text>Try some equations!</Text>
                         <Button onClick={() => demo1()}>Silly demo 1</Button>
                         <Button onClick={() => demo2()}>Silly demo 2</Button>
