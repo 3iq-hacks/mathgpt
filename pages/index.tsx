@@ -41,7 +41,7 @@ type Answer = { tag: 'idle' } | { tag: 'loading' } | { tag: 'success', response:
 type Custom = { tag: 'true' } | { tag: 'false' }
 
 // const PromptInput: React.FC<{ custom: Custom }> = ({ custom }) => {
-//     return <Input value={'Enter custom prompt'} visibility={custom.tag === 'true' ? visible : hidden}>Enter custom prompt: </Input>
+//     return <Input value={'Enter custom prompt'} visibility={custom.tag === 'true' ? visible : none}>Enter custom prompt: </Input>
 //     if (custom.tag === 'true') {
 //         return <Input>Enter custom prompt</Input>
 //     }
@@ -164,9 +164,6 @@ export default function Home() {
                     <meta name="description" content="Awesome math" />
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
                     <link rel="icon" href="/favicon.ico" />
-                    <link rel="stylesheet" href="https://unpkg.com/mathlive/dist/mathlive-static.css" />
-                    <script defer src="//unpkg.com/mathlive"></script>
-
                 </Head>
                 <main className={styles.main}>
                     <Card padding="3em" borderRadius="20px" bgGradient={'linear(to-b, #34302F, #666261)'} borderWidth={'5px'} borderColor={'#0C1220'} gap={8}>
