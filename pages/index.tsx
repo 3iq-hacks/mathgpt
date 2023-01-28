@@ -2,8 +2,11 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
+import { MathfieldElement } from 'mathlive';
 
 const inter = Inter({ subsets: ['latin'] })
+const mfe = new MathfieldElement();
+mfe.value = '\\frac{\\pi}{2}';
 
 export default function Home() {
   return (
@@ -20,6 +23,7 @@ export default function Home() {
             Get started by editing&nbsp;
             <code className={styles.code}>pages/index.tsx</code>
           </p>
+          <div id="mathfield" />
           <div>
             <a
               href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
