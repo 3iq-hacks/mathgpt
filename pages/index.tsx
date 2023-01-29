@@ -85,7 +85,7 @@ const ShowAnswer: React.FC<{ answer: Answer }> = ({ answer }) => {
 
     return (
         <Box display='flex' alignItems='center' w='full' pt='4' pb='4'>
-            <Box w='full'>
+            <Box w='full' overflowX='scroll' pt='4' pb='4' mr='2'>
                 <StaticMathField src={answer.response} id='apiAnswer' />
             </Box>
             <Button onClick={() => copyToClipboard()}>
@@ -165,7 +165,7 @@ export default function Home() {
     }
 
     const demo2 = () => {
-        setLatex('\\frac{d}{dx} 1/x+1/x^2')
+        setLatex('\\frac{d}{dx} \\left(1/x+1/x^2\\right) = 1')
         dropdownDispatch('Find x')
     }
 
