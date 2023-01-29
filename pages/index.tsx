@@ -132,7 +132,7 @@ const promptify = (data: DropdownData, latex: string): string => {
     const promptDict: dropdownPrompts = {
         'Solve': 'Solve the following',
         'Find x': 'Find x in the following',
-        'Custom': data.customPrompt
+        'Custom': data.customPrompt,
     }
 
     return `${promptDict[data.value]}: $$${latex}$$`
@@ -246,6 +246,7 @@ export default function Home() {
                     <Button fontSize="25px" marginTop="40px" textColor={'white'} bgGradient='linear(to-r, #7928CA, #FF0080)' colorScheme='teal' onClick={() => handleSubmit()}>Calculate!</Button>
                     <ShowAnswer answer={answer} />
                 </Card>
+                <img width='50px' height='50px' src='https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1627321328331x304585140651317100%2Fopenai.gif?w=&h=&auto=compress&dpr=1&fit=max' />
                 <Card gap={8} margin="20px" padding="15px">
                     <Text fontSize='25px'>Try some equations!</Text>
                     <Button textColor={'white'} bgGradient='linear(to-r, #187D71, #151394)' colorScheme='teal' onClick={() => demo1()}>Try solving!</Button>

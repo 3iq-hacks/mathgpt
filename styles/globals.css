@@ -26,3 +26,8 @@ body {
     border-color: #63b3ed;
     box-shadow: 0 0 0 1px #63b3ed;
 }
+
+.mq-editable-field.mq-focused .mq-cursor {
+    background-color: white;
+    border-color: white;
+}
