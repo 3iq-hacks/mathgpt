@@ -17,15 +17,23 @@ npm i
 npm run dev
 ```
 
-## Libraries Used
+## Tools Used
 
 ### Frontend
-- [Chakra UI](https://chakra-ui.com/) for cool looks
-- [React loading icons](https://www.npmjs.com/package/react-loading-icons) for the animated icon
+
+- [Chakra UI](https://chakra-ui.com/) for easy components to use.
+- [React loading icons](https://www.npmjs.com/package/react-loading-icons) for animated loading icons.
+- [Mathlive](https://cortexjs.io/mathlive/) and [Mathquill](http://mathquill.com/) for LaTex input and output.
+
 
 ### Backend
-- [Open AI](https://openai.com/api/) for problems
-- [Math Quill](http://mathquill.com/) for math input
+
+- [Open AI](https://openai.com/api/) to communicate with GPT-3.
+- [Next.JS](https://nextjs.org/)'s serverless functions.
+- [Vercel](https://vercel.com/) for hosting.
+
 
 ## Screenshots
-[Look at our devpost lol](https://devpost.com/software/math-gpt)
+
+[Take a look at our devpost](https://devpost.com/software/math-gpt)!
+

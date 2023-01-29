@@ -48,7 +48,7 @@ export default async function handler(
         console.log('Handling chatGPT: total prompt and context:', total_prompt)
 
         const completion = await openai.createCompletion({
-            model: 'text-curie-001',
+            model: 'text-davinci-003',
             // append prompt to the end of the prompt context
             prompt: total_prompt,
             temperature: 0.3,
