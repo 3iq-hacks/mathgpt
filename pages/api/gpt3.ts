@@ -48,7 +48,7 @@ export default async function handler(
         console.log('Handling chatGPT: total prompt and context:', total_prompt)
 
         const completion = await openai.createCompletion({
-            model: 'text-davinci-003',
+            model: 'text-curie-001',
             // append prompt to the end of the prompt context
             prompt: total_prompt,
             temperature: 0.3,
@@ -65,16 +65,6 @@ export default async function handler(
         } else {
             return res.send({ tag: 'success', promptReturn: answer.trim() })
         }
-
-        // return res.send({
-        //     tag: 'success',
-        //     promptReturn: 'The answer is: $$\\lim_{n \\to \\infty} a_n = \\lim_{n \\to \\infty} \\left( \\frac{n-1}{n} \\right)^n = \\lim_{n \\to \\infty} \\left( 1 - \\frac{1}{n} \\right)^n = e^{-1}$$',
-        // })
-
-        // return res.send({
-        //     tag: 'success',
-        //     promptReturn: '$$\\frac{d}{dx}\\left(1/x+1/x^2\\right)=1 \\Rightarrow \\frac{d}{dx}\\left(\\frac{1}{x} + \\frac{1}{x^2}\\right) = 1 \\Rightarrow \\frac{-1}{x^2}$$'
-        // })
 
     } catch (e) {
         // somehow, JSON.stringify() returns an empty object
