@@ -156,7 +156,7 @@ type DropdownReducer = typeof dropdownReducer;
 export default function Home() {
     const [latex, setLatex] = useState('\\frac{1}{\\sqrt{2}}\\cdot 2')
     const [answer, setAnswer] = useState<Answer>({ tag: 'idle' })
-    const [dropdownState, dropdownDispatch] = useReducer<DropdownReducer>(dropdownReducer, { value: 'Custom', customPrompt: '' })
+    const [dropdownState, dropdownDispatch] = useReducer<DropdownReducer>(dropdownReducer, { value: 'Solve', customPrompt: '' })
     const toast = useToast()
 
     const demo1 = () => {
