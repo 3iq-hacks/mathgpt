@@ -14,8 +14,15 @@ body {
     width: 100%;
 }
 
-math-field {
+.mq-editable-field.mq-math-mode {
     padding: 8px;
-    border-radius: 0.5rem;
-    border: 1px solid #ddd;
+    border-radius: 6px;
+    transition-property: var(--chakra-transition-property-common);
+    transition-duration: var(--chakra-transition-duration-normal);
+}
+
+.mq-editable-field.mq-math-mode.mq-focused {
+    border-radius: 6px;
+    border-color: #63b3ed;
+    box-shadow: 0 0 0 1px #63b3ed;
 }

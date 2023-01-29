@@ -220,7 +220,7 @@ export default function Home() {
                     gap={8}
                     maxW='3xl'
                     width='full'>
-                    <Text bgGradient='linear(to-l, #7928CA, #FF0080)' bgClip='text' fontSize='70px' fontWeight='extrabold'>Math GPT</Text>
+                    <Text bgGradient='linear(to-l, #6931E0, #D41795)' bgClip='text' fontSize='70px' fontWeight='extrabold'>Math GPT</Text>
                     <Select size='md'
                         value={dropdownState.value}
                         onChange={(e) => dropdownDispatch(e.target.value.toString() as Dropdown)}>
