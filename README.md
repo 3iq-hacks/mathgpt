@@ -28,4 +28,4 @@ npm run dev
 - [Math Quill](http://mathquill.com/) for math input
 
 ## Screenshots
-
+[Look at our devpost lol](https://devpost.com/software/math-gpt)
