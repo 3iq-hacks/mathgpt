@@ -19,6 +19,15 @@ body {
     border-radius: 6px;
     transition-property: var(--chakra-transition-property-common);
     transition-duration: var(--chakra-transition-duration-normal);
+    border-color: var(--chakra-colors-chakra-border-color);
+}
+
+.mq-editable-field.mq-math-mode:hover {
+    padding: 8px;
+    border-radius: 6px;
+    transition-property: var(--chakra-transition-property-common);
+    transition-duration: var(--chakra-transition-duration-normal);
+    border-color: var(--chakra-colors-whiteAlpha-300);
 }
 
 .mq-editable-field.mq-math-mode.mq-focused {

@@ -67,7 +67,7 @@ const ShowAnswer: React.FC<{ answer: Answer }> = ({ answer }) => {
             <Box>
                 <AlertTitle>There was an error!</AlertTitle>
                 <AlertDescription>
-                    Error {answer.error}
+                    <Text as='b'>Message:</Text> {answer.error}
                 </AlertDescription>
             </Box>
         </Alert>
@@ -85,7 +85,7 @@ const ShowAnswer: React.FC<{ answer: Answer }> = ({ answer }) => {
 
     return (
         <Box display='flex' alignItems='center' w='full' pt='4' pb='4'>
-            <Box w='full' overflowX='scroll' pt='4' pb='4' mr='2'>
+            <Box w='full' overflowX='auto' pt='4' pb='4' mr='2'>
                 <StaticMathField src={answer.response} id='apiAnswer' />
             </Box>
             <Button onClick={() => copyToClipboard()}>
@@ -160,12 +160,12 @@ export default function Home() {
     const toast = useToast()
 
     const demo1 = () => {
-        setLatex('\\frac{1}{\\sqrt{2}}\\cdot 2')
+        setLatex('\\int x^{5}dx')
         dropdownDispatch('Solve')
     }
 
     const demo2 = () => {
-        setLatex('\\frac{d}{dx} \\left(1/x+1/x^2\\right) = 1')
+        setLatex('x^2+x+1=2')
         dropdownDispatch('Find x')
     }
 
@@ -191,11 +191,18 @@ export default function Home() {
                 body: JSON.stringify({ prompt })
             })
             const responseJson = await response.json()
+            console.log('Got response', responseJson)
             const parsed = ApiReturnSchema.safeParse(responseJson)
             if (!parsed.success) {
                 setAnswer({ tag: 'error', error: 'Error parsing result: ' + parsed.error.toString() })
             } else {
-                setAnswer({ tag: 'success', response: parsed.data.promptReturn })
+                console.log('Got answer', parsed.data)
+                if (parsed.data.tag === 'error') {
+                    setAnswer({ tag: 'error', error: parsed.data.error })
+                    return
+                } else {
+                    setAnswer({ tag: 'success', response: parsed.data.promptReturn })
+                }
             }
         } catch (e) {
             setAnswer({ tag: 'error', error: JSON.stringify(e) })
@@ -220,7 +227,7 @@ export default function Home() {
                     gap={8}
                     maxW='3xl'
                     width='full'>
-                    <Text bgGradient='linear(to-l, #6931E0, #D41795)' bgClip='text' fontSize='70px' fontWeight='extrabold'>Math GPT</Text>
+                    <Text align="center" bgGradient='linear(to-l, #6931E0, #D41795)' bgClip='text' fontSize='70px' fontWeight='extrabold'>Math GPT</Text>
                     <Select size='md'
                         value={dropdownState.value}
                         onChange={(e) => dropdownDispatch(e.target.value.toString() as Dropdown)}>
