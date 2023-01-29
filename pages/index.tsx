@@ -38,6 +38,8 @@ const StaticMathField = dynamic(() => import('@/components/StaticMath'), {
 type Answer = { tag: 'idle' } | { tag: 'loading' } | { tag: 'success', response: string } | { tag: 'error', error: string }
 
 const ShowAnswer: React.FC<{ answer: Answer }> = ({ answer }) => {
+    const toast = useToast()
+
     if (answer.tag === 'idle') {
         return null
     }
@@ -71,12 +73,22 @@ const ShowAnswer: React.FC<{ answer: Answer }> = ({ answer }) => {
         </Alert>
     }
 
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(answer.response)
+        toast({
+            title: 'Copied to clipboard!',
+            status: 'info',
+            duration: 9000,
+            isClosable: true,
+        })
+    }
+
     return (
-        <Box display="flex" alignItems="center">
-            <Box p='6'>
+        <Box display='flex' alignItems='center' w='full' pt='4' pb='4'>
+            <Box w='full'>
                 <StaticMathField src={answer.response} id='apiAnswer' />
             </Box>
-            <Button onClick={() => { navigator.clipboard.writeText(answer.response) }}>
+            <Button onClick={() => copyToClipboard()}>
                 <CopyIcon />
             </Button>
         </Box>
@@ -101,7 +113,7 @@ const CustomPromptInput: React.FC<CustomPromptInputProps> = ({ dropdownData, dro
             bgGradient='none'
             bgColor='transparent'
             border='1px solid var(--chakra-colors-whiteAlpha-300)'
-            onBlur={() => { if (dropdownData.customPrompt === '') { setError(true) } }}
+            onBlur={() => { if (dropdownData.customPrompt === '') { setError(true) } else { setError(false) } }}
             onChange={(e) => dropdownDispatch({ tag: 'ChangeCustom', value: e.target.value })} />
     )
 }
@@ -111,7 +123,7 @@ type DropdownData = {
     customPrompt: string
 }
 
-const dropdowns = ['Solve', 'Find x', 'Prove', 'Custom'] as const;
+const dropdowns = ['Solve', 'Find x', 'Custom'] as const;
 type Dropdown = typeof dropdowns[number];
 type dropdownPrompts = {
     [Property in typeof dropdowns[number]]: string
@@ -120,7 +132,6 @@ const promptify = (data: DropdownData, latex: string): string => {
     const promptDict: dropdownPrompts = {
         'Solve': 'Solve the following',
         'Find x': 'Find x in the following',
-        'Prove': 'Prove the following',
         'Custom': data.customPrompt
     }
 
@@ -134,8 +145,6 @@ function dropdownReducer(state: DropdownData, action: DropdownAction): DropdownD
         return { ...state, value: 'Solve' }
     } else if (action === 'Find x') {
         return { ...state, value: 'Find x' }
-    } else if (action === 'Prove') {
-        return { ...state, value: 'Prove' }
     } else if (action === 'Custom') {
         return { ...state, value: 'Custom' }
     } else {
@@ -158,11 +167,6 @@ export default function Home() {
     const demo2 = () => {
         setLatex('\\frac{d}{dx} 1/x+1/x^2')
         dropdownDispatch('Find x')
-    }
-
-    const demo3 = () => {
-        setLatex('proof')
-        dropdownDispatch('Prove')
     }
 
     const handleSubmit = async () => {
@@ -207,7 +211,15 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className={styles.main}>
-                <Card padding="3em" borderRadius="20px" bgGradient={'linear(to-b, #34302F, #666261)'} borderWidth={'5px'} borderColor={'#0C1220'} gap={8}>
+                <Card
+                    padding="3em"
+                    borderRadius="20px"
+                    bgGradient={'linear(to-b, #34302F, #666261)'}
+                    borderWidth={'5px'}
+                    borderColor={'#0C1220'}
+                    gap={8}
+                    maxW='3xl'
+                    width='full'>
                     <Text bgGradient='linear(to-l, #7928CA, #FF0080)' bgClip='text' fontSize='70px' fontWeight='extrabold'>Math GPT</Text>
                     <Select size='md'
                         value={dropdownState.value}
@@ -238,7 +250,6 @@ export default function Home() {
                     <Text fontSize='25px'>Try some equations!</Text>
                     <Button textColor={'white'} bgGradient='linear(to-r, #187D71, #151394)' colorScheme='teal' onClick={() => demo1()}>Try solving!</Button>
                     <Button textColor={'white'} bgGradient='linear(to-r, #8D9C0E, #359600)' colorScheme='teal' onClick={() => demo2()}>Try finding x!</Button>
-                    <Button textColor={'white'} bgGradient='linear(to-r, #a33400, #5C2055)' colorScheme='teal' onClick={() => demo3()}>Try proving!</Button>
                 </Card>
             </main>
         </>
