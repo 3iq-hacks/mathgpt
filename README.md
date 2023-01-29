@@ -23,8 +23,9 @@ npm run dev
 - [Chakra UI](https://chakra-ui.com/) for cool looks
 - [React loading icons](https://www.npmjs.com/package/react-loading-icons) for the animated icon
 
-
 ### Backend
--
+- [Open AI](https://openai.com/api/) for problems
+- [Math Quill](http://mathquill.com/) for math input
 
 ## Screenshots
+
