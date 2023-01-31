@@ -1,19 +1,15 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useState, useReducer } from 'react';
 import dynamic from 'next/dynamic';
 import {
-    Button, ButtonGroup, Select,
-    Text, Card, Box, useToast,
-    Alert, AlertTitle, AlertDescription, AlertIcon,
-    Accordion, AccordionButton, AccordionItem, AccordionPanel, AccordionIcon,
-    Input
+    Button, Select, Text, Card, Box, useToast,
+    Accordion, AccordionButton, AccordionItem, AccordionPanel, AccordionIcon, Input
 } from '@chakra-ui/react'
-import { Grid } from 'react-loading-icons'
 import { ApiReturnSchema } from '@/types/apiTypes';
-import { CopyIcon } from '@chakra-ui/icons';
+import ShowAnswer, { AnswerState } from '@/components/Answer';
+import Footer from '@/components/Footer';
+
 
 const EquationInput: React.FC<{ setLatex: React.Dispatch<React.SetStateAction<string>>, latex: string }> = ({ setLatex, latex }) => {
     return (
@@ -30,70 +26,6 @@ const DynamicMathField = dynamic(() => import('react18-mathquill').then(mod => {
 }), {
     ssr: false,
 });
-
-const StaticMathField = dynamic(() => import('@/components/StaticMath'), {
-    ssr: false,
-});
-
-type Answer = { tag: 'idle' } | { tag: 'loading' } | { tag: 'success', response: string } | { tag: 'error', error: string }
-
-const ShowAnswer: React.FC<{ answer: Answer }> = ({ answer }) => {
-    const toast = useToast()
-
-    if (answer.tag === 'idle') {
-        return null
-    }
-
-    if (answer.tag === 'loading') {
-        const loadingTexts = [
-            'Completing your homework',
-            'Generating Latex',
-            'Consulting the AI Singularity',
-            'Solving the P vs NP problem',
-            'Running superior wolfram alpha',
-            'Doing super complex computations'
-        ]
-        // https://stackoverflow.com/a/5915122
-        const randText = loadingTexts[loadingTexts.length * Math.random() | 0]
-        return <Box display='flex' alignItems='center' flexDirection='column' gap={2}>
-            <Text fontSize='md'>{randText}...</Text>
-            <Grid />
-        </Box>
-    }
-
-    if (answer.tag === 'error') {
-        return <Alert status='error'>
-            <AlertIcon />
-            <Box>
-                <AlertTitle>There was an error!</AlertTitle>
-                <AlertDescription>
-                    <Text as='b'>Message:</Text> {answer.error}
-                </AlertDescription>
-            </Box>
-        </Alert>
-    }
-
-    const copyToClipboard = () => {
-        navigator.clipboard.writeText(answer.response)
-        toast({
-            title: 'Copied to clipboard!',
-            status: 'info',
-            duration: 9000,
-            isClosable: true,
-        })
-    }
-
-    return (
-        <Box display='flex' alignItems='center' w='full' pt='4' pb='4'>
-            <Box w='full' overflowX='auto' pt='4' pb='4' mr='2'>
-                <StaticMathField src={answer.response} id='apiAnswer' />
-            </Box>
-            <Button onClick={() => copyToClipboard()}>
-                <CopyIcon />
-            </Button>
-        </Box>
-    )
-}
 
 interface CustomPromptInputProps {
     dropdownData: DropdownData
@@ -155,7 +87,7 @@ type DropdownReducer = typeof dropdownReducer;
 
 export default function Home() {
     const [latex, setLatex] = useState('\\frac{1}{\\sqrt{2}}\\cdot 2')
-    const [answer, setAnswer] = useState<Answer>({ tag: 'idle' })
+    const [answer, setAnswer] = useState<AnswerState>({ tag: 'idle' })
     const [dropdownState, dropdownDispatch] = useReducer<DropdownReducer>(dropdownReducer, { value: 'Solve', customPrompt: '' })
     const toast = useToast()
 
@@ -194,15 +126,11 @@ export default function Home() {
             console.log('Got response', responseJson)
             const parsed = ApiReturnSchema.safeParse(responseJson)
             if (!parsed.success) {
+                // if we used typc, we wouldn't be in this situation...
                 setAnswer({ tag: 'error', error: 'Error parsing result: ' + parsed.error.toString() })
             } else {
                 console.log('Got answer', parsed.data)
-                if (parsed.data.tag === 'error') {
-                    setAnswer({ tag: 'error', error: parsed.data.error })
-                    return
-                } else {
-                    setAnswer({ tag: 'success', response: parsed.data.promptReturn })
-                }
+                setAnswer(parsed.data);
             }
         } catch (e) {
             setAnswer({ tag: 'error', error: JSON.stringify(e) })
@@ -225,9 +153,12 @@ export default function Home() {
                     borderWidth={'5px'}
                     borderColor={'#0C1220'}
                     gap={8}
-                    maxW='3xl'
+                    maxW='5xl'
                     width='full'>
-                    <Text align="center" bgGradient='linear(to-l, #6931E0, #D41795)' bgClip='text' fontSize='70px' fontWeight='extrabold'>Math GPT</Text>
+                    <Box textAlign='center'>
+                        <Text align="center" bgGradient='linear(to-l, #6931E0, #D41795)' bgClip='text' fontSize='70px' fontWeight='extrabold'>Math GPT</Text>
+                        <Text fontSize='2xl' fontStyle='italic' align='center'>Solving Math with GPT-3</Text>
+                    </Box>
                     <Select size='md'
                         value={dropdownState.value}
                         onChange={(e) => dropdownDispatch(e.target.value.toString() as Dropdown)}>
@@ -259,6 +190,7 @@ export default function Home() {
                     <Button textColor={'white'} bgGradient='linear(to-r, #187D71, #151394)' colorScheme='teal' onClick={() => demo1()}>Try solving!</Button>
                     <Button textColor={'white'} bgGradient='linear(to-r, #8D9C0E, #359600)' colorScheme='teal' onClick={() => demo2()}>Try finding x!</Button>
                 </Card>
+                <Footer />
             </main>
         </>
     )
