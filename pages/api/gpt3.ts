@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { ApiReturnSchema, ApiSchema } from '@/types/apiTypes';
+import { ApiReturnSchema, ApiSchema, OpenAIAPIError } from '@/types/apiTypes';
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Configuration, OpenAIApi } from 'openai';
 import { z } from 'zod';
@@ -7,8 +7,6 @@ import { z } from 'zod';
 const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
 });
-
-const openai = new OpenAIApi(configuration);
 
 
 const PROMPT_CONTEXT = `Make a math bot for school.
@@ -18,11 +16,6 @@ A: $$\\int x^{2}dx = \\frac{1}{3} x^3 + C$$
 Q: Solve the following: $$\\int_{1}^{3}x^{2}dx$$
 A: $$\\int_{1}^{2}x^{2} = \\left[  \\frac{1}{2} x^3 \\right]_{1}^{2} = \\frac{2^3}{3} - \\frac{1^3}{3} = \\frac{7}{3}$$`
 
-function sleep(ms: number) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, ms);
-    });
-}
 
 export default async function handler(
     req: NextApiRequest,
@@ -53,7 +46,7 @@ export default async function handler(
             prompt: total_prompt,
             temperature: 0.3,
             max_tokens: 500
-        });
+        })
         console.log('Completion:', completion.data)
         const answer = completion.data.choices[0].text;
         if (!answer) {
@@ -67,8 +60,17 @@ export default async function handler(
         }
 
     } catch (e) {
-        // somehow, JSON.stringify() returns an empty object
-        console.log('Error in chatGPT:', e, String(e))
-        res.status(500).send({ tag: 'error', error: String(e) })
+        const parsedError = OpenAIAPIError.safeParse(e);
+
+        if (!parsedError.success) {
+            // unknown error
+            console.log('Unknown error: cannot parse!', parsedError.error)
+            return res.status(500).send({ tag: 'error', error: String(e) })
+        } else {
+            const { status, statusText } = parsedError.data.response;
+            console.log('OpenAI API error:', status, statusText)
+            return res.status(500).send({ tag: 'openAIAPIError', data: { status, statusText } })
+        }
     }
 }
+
