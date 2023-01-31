@@ -6,11 +6,19 @@ This project takes an equation uses Chat GPT to do computations that the user sp
 
 ## How to Run
 
-### Devcontainers (Nodejs 18)
+### Prerequisites 
 
-This project uses devcontainers to make it easy to run. If you have VSCode and a working installation of Docker, you can just open the project in a container and it will automatically install all the dependencies and run the project.
+Create an Open AI account and get an API key. Then, create a file called `.env.local` in the root directory and add the key to the environment variable `OPENAI_API_KEY`.
 
-Once inside the devcontainer, run the following to get the Next.JS site to run:
+```
+OPENAI_API_KEY=************************
+```
+
+### Devcontainers/Codespaces (Nodejs 18)
+
+This project uses devcontainers to make it easy to run. If you have VSCode and a working installation of Docker, you can just open the project in a container with a full IDE configuration. You can also open it in a codespace on GitHub.
+
+Once inside the devcontainer, run the following to open the project in a browser.
 
 ```
 npm i
