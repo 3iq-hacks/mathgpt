@@ -3,7 +3,7 @@ import { FaGithub } from 'react-icons/fa'
 
 
 export default () => (
-    <Container as="footer" role="contentinfo" py={{ base: '12', md: '16' }}>
+    <Container as="footer" role="contentinfo" pt={{ base: '12', md: '16' }}>
         <Stack spacing={{ base: '4', md: '5' }}>
             <Stack justify="space-between" direction="row" align="center">
                 <Text fontSize="sm" color="subtle">
