@@ -1,18 +1,14 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useState, useReducer } from 'react';
 import dynamic from 'next/dynamic';
 import {
-    Button, ButtonGroup, Select,
-    Text, Card, Box, useToast,
-    Alert, AlertTitle, AlertDescription, AlertIcon,
-    Accordion, AccordionButton, AccordionItem, AccordionPanel, AccordionIcon,
-    Input
+    Button, Select, Text, Card, Box, useToast,
+    Accordion, AccordionButton, AccordionItem, AccordionPanel, AccordionIcon, Input
 } from '@chakra-ui/react'
 import { ApiReturnSchema } from '@/types/apiTypes';
 import ShowAnswer, { AnswerState } from '@/components/Answer';
+import Footer from '@/components/Footer';
 
 
 const EquationInput: React.FC<{ setLatex: React.Dispatch<React.SetStateAction<string>>, latex: string }> = ({ setLatex, latex }) => {
@@ -194,6 +190,7 @@ export default function Home() {
                     <Button textColor={'white'} bgGradient='linear(to-r, #187D71, #151394)' colorScheme='teal' onClick={() => demo1()}>Try solving!</Button>
                     <Button textColor={'white'} bgGradient='linear(to-r, #8D9C0E, #359600)' colorScheme='teal' onClick={() => demo2()}>Try finding x!</Button>
                 </Card>
+                <Footer />
             </main>
         </>
     )
