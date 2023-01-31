@@ -10,7 +10,7 @@ export default () => (
                     MathGPT, built for Hackrithmitic 2 2023
                 </Text>
                 <ButtonGroup variant="ghost">
-                    <IconButton as="a" href="https://github.com/hackathon-group-301/mathgpt" aria-label="GitHub" icon={<FaGithub fontSize="1.25rem" />} />
+                    <IconButton as="a" href="https://github.com/3iq-hacks/mathgpt" aria-label="GitHub" icon={<FaGithub fontSize="1.25rem" />} />
                 </ButtonGroup>
             </Stack>
         </Stack>
