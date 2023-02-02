@@ -58,7 +58,7 @@ const ShowAnswer: React.FC<{ answer: AnswerState }> = ({ answer }) => {
                     <Text>We're sorry, we've seemed to hit out maximum monthly spending limit for OpenAI's API (we're poor students!)</Text>
                     If you're interested in this project, check out our
                     <Link color='#c5aaff' href='https://devpost.com/software/math-gpt'> Hackathon's devpost <ExternalLinkIcon /></Link>,
-                    <Link as={NextLink} color='#c5aaff' href='https://github.com/hackathon-group-301/mathgpt#how-to-run' isExternal> Run this yourself <ExternalLinkIcon /> </Link> or get in contact with us!
+                    <Link as={NextLink} color='#c5aaff' href='https://github.com/3iq-hacks/mathgpt#running-locally' isExternal> Run this yourself <ExternalLinkIcon /> </Link> or get in contact with us!
                 </AlertDescription>
             </Box>
         </Alert>
