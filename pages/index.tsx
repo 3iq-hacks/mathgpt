@@ -141,7 +141,7 @@ export default function Home() {
         <>
             <Head>
                 <title>Math GPT</title>
-                <meta name="description" content="Awesome math" />
+                <meta name="description" content="GPT-3 Powered Math Solutions" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
