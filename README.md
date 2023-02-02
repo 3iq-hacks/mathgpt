@@ -4,7 +4,7 @@ By Aneeljyot Alagh, Curtis Kan, and Joshua Ji.
 
 This project takes a prompt from the user and uses OpenAI's GPT-3 API to do computations that the user specifies. They can choose from a dropdown of common computations or create their own.
 
-## How to Run
+## Running Locally
 
 ### Prerequisites 
 
