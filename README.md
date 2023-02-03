@@ -45,3 +45,10 @@ npm run dev
 
 [Take a look at our devpost](https://devpost.com/software/math-gpt)!
 
+## Disclaimer
+
+The authors of this project do not assume any responsibility or liability for any damages, losses, or consequences of illegitimate or unintended uses of this site or code. The authors reserve the right to accuse any accuser with even greater accusations.
+
+That being said, if anything bad happens, please let us know, and we'll make tea and read instruction manuals or something: whatever you're supposed to do in a crisis.
+
+No animals were harmed in the making of this project, but more than one human was sleep-deprived.
