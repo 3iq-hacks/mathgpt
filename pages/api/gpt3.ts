@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { ApiReturnSchema, ApiSchema, OpenAIAPIError } from '@/types/apiTypes';
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Configuration, OpenAIApi } from 'openai';
+import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from 'openai';
 import { z } from 'zod';
 
 const configuration = new Configuration({
@@ -9,14 +9,13 @@ const configuration = new Configuration({
 });
 
 
-const PROMPT_CONTEXT = `Make a math bot for school.
-This bot helps with schoolwork by taking in a mathematical problem and solving it, outputting the intermediate steps as well. Mathematical symbols in the input and outputs, as well as the steps, are all done in LaTeX.
-Q: Solve the following: $$\\int x^{2}dx$$
-A: $$\\int x^{2}dx = \\frac{1}{3} x^3 + C$$
-Q: Solve the following: $$\\int_{1}^{3}x^{2}dx$$
-A: $$\\int_{1}^{2}x^{2} = \\left[  \\frac{1}{2} x^3 \\right]_{1}^{2} = \\frac{2^3}{3} - \\frac{1^3}{3} = \\frac{7}{3}$$`
-
-
+const MESSAGES_CONTEXT: ChatCompletionRequestMessage[] = [
+    { role: "system", content: "You are a math bot built for high school and undergraduate calculus courses. You helpe with schoolwork by taking in a mathematical problem and solving it, outputting the intermediate steps as well. Mathematical symbols in the input and outputs, as well as the steps, are all done in LaTeX." },
+    { role: "user", content: "Solve the following: $$\\int x^{2}dx$$" },
+    { role: "assistant", content: "$$\\int x^{2}dx = \\frac{1}{3} x^3 + C$$" },
+    { role: "user", content: "Solve the following: $$\\int_{1}^{3}x^{2}dx$$" },
+    { role: "assistant", content: "$$\\int_{1}^{2}x^{2} = \\left[  \\frac{1}{2} x^3 \\right]_{1}^{2} = \\frac{2^3}{3} - \\frac{1^3}{3} = \\frac{7}{3}$$" },
+]
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<ApiReturnSchema>
@@ -37,27 +36,22 @@ export default async function handler(
             res.status(400).send({ tag: 'error', error: `Bad request: ${parsed.error.toString()}` })
             return
         }
-        const total_prompt = PROMPT_CONTEXT + `\nQ: ${parsed.data.prompt}`;
-        console.log('Handling chatGPT: total prompt and context:', total_prompt)
+        const total_prompt: ChatCompletionRequestMessage[] = [...MESSAGES_CONTEXT, { "role": "user", "content": parsed.data.prompt }];
+        console.log('Handling chatGPT: total prompt and context:', total_prompt);
 
-        const completion = await openai.createCompletion({
-            model: 'text-davinci-003',
-            // append prompt to the end of the prompt context
-            prompt: total_prompt,
-            temperature: 0.3,
-            max_tokens: 500
+        const completion = await openai.createChatCompletion({
+            model: 'gpt-3.5-turbo',
+            messages: total_prompt,
+            temperature: 0.5,
         })
         console.log('Completion:', completion.data)
-        const answer = completion.data.choices[0].text;
+        const answer = completion.data.choices[0].message?.content;
+
         if (!answer) {
             return res.send({ tag: 'error', error: 'No answer found' })
         }
         console.log(`Got answer '${answer}'`)
-        if (answer.trim().startsWith('A:')) {
-            return res.send({ tag: 'success', promptReturn: answer.trim().slice(2).trim() })
-        } else {
-            return res.send({ tag: 'success', promptReturn: answer.trim() })
-        }
+        return res.send({ tag: 'success', promptReturn: answer.trim() })
 
     } catch (e) {
         const parsedError = OpenAIAPIError.safeParse(e);
