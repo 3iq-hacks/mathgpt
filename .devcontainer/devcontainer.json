@@ -1,25 +1,26 @@
-// See https://containers.dev/implementors/json_reference/ for configuration reference
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
 {
-	"name": "Hackrithmetic 2",
-	"build": {
-		"dockerfile": "Dockerfile"
-	},
-"remoteUser": "node",
-
-  // https://www.kenmuse.com/blog/avoiding-dubious-ownership-in-dev-containers/
-  // https://github.com/microsoft/vscode-remote-release/issues/6810#issuecomment-1310980232
-  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
-"features": {
-	"ghcr.io/devcontainers/features/git:1": {
-        "version": 2.38
-    },
-	"ghcr.io/devcontainers/features/github-cli:1": {}
-},
-"customizations": {
-	"vscode": {
-		"extensions": [
-			"esbenp.prettier-vscode"
-		]
+	"name": "MathGPT",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/javascript-node:0-18-bullseye",
+	"features": {
+		"ghcr.io/devcontainers/features/common-utils:2": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {}
 	}
-}
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "yarn install",
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
 }
