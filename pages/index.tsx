@@ -4,7 +4,7 @@ import React, { useState, useReducer } from 'react';
 import dynamic from 'next/dynamic';
 import {
     Button, Select, Text, Card, Box, useToast,
-    Accordion, AccordionButton, AccordionItem, AccordionPanel, AccordionIcon, Input
+    Accordion, AccordionButton, AccordionItem, AccordionPanel, AccordionIcon, Input, Center
 } from '@chakra-ui/react'
 import { ApiReturnSchema } from '@/types/apiTypes';
 import ShowAnswer, { AnswerState } from '@/components/Answer';
@@ -146,6 +146,12 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className={styles.main}>
+                <Card bg="red" padding={20} margin={10}>
+                <Center>
+                <Text fontSize="4xl">THIS PROJECT IS DISCONTINUED BECAUSE IT COSTS MONEY TO ASK GPT THINGS</Text>
+                <Text _hover={{color:  'black'}} onClick={() => window.open("https://youtu.be/maNg5wqEq3U")} fontSize='4xl'>WATCH A VIDEO DEMO INSTEAD TO SEE HOW IT WORKS</Text>
+                </Center>
+                </Card>
                 <Card
                     padding="3em"
                     borderRadius="20px"
@@ -181,7 +187,7 @@ export default function Home() {
                             </AccordionPanel>
                         </AccordionItem>
                     </Accordion>
-                    <Button fontSize="25px" marginTop="40px" textColor={'white'} bgGradient='linear(to-r, #7928CA, #FF0080)' colorScheme='teal' onClick={() => handleSubmit()}>Calculate!</Button>
+                    <Button fontSize="25px" marginTop="40px" textColor={'white'} bgGradient='linear(to-r, #7928CA, #FF0080)' colorScheme='teal'>Calculate!</Button>
                     <ShowAnswer answer={answer} />
                 </Card>
                 <img width='50px' height='50px' src='https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1627321328331x304585140651317100%2Fopenai.gif?w=&h=&auto=compress&dpr=1&fit=max' />
